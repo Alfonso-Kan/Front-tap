@@ -1,0 +1,65 @@
+<div class="list-header">
+  <h1>Usuarios</h1>
+  <div class="list-actions">
+    <button mat-stroked-button (click)="exportarPdf()">
+      <mat-icon>picture_as_pdf</mat-icon>
+      PDF
+    </button>
+    <button mat-stroked-button (click)="exportarExcel()">
+      <mat-icon>grid_on</mat-icon>
+      Excel
+    </button>
+    <button mat-flat-button color="primary" (click)="abrirCrear()">
+      <mat-icon>add</mat-icon>
+      Nuevo usuario
+    </button>
+  </div>
+</div>
+
+@if (cargando()) {
+  <div class="list-loading"><mat-spinner diameter="32"></mat-spinner></div>
+} @else {
+  <table mat-table [dataSource]="usuarios()" class="list-table">
+    <ng-container matColumnDef="codigo">
+      <th mat-header-cell *matHeaderCellDef>Código</th>
+      <td mat-cell *matCellDef="let usuario">{{ usuario.codigo }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="usuario">
+      <th mat-header-cell *matHeaderCellDef>Usuario</th>
+      <td mat-cell *matCellDef="let usuario">{{ usuario.usuario }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="nombre">
+      <th mat-header-cell *matHeaderCellDef>Nombre</th>
+      <td mat-cell *matCellDef="let usuario">{{ usuario.nombre }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="fecha_creacion">
+      <th mat-header-cell *matHeaderCellDef>Fecha de creación</th>
+      <td mat-cell *matCellDef="let usuario">{{ usuario.fecha_creacion | date: 'dd/MM/yyyy HH:mm' }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="acciones">
+      <th mat-header-cell *matHeaderCellDef>Acciones</th>
+      <td mat-cell *matCellDef="let usuario">
+        <button mat-icon-button (click)="verDetalle(usuario)" matTooltip="Ver detalle">
+          <mat-icon>visibility</mat-icon>
+        </button>
+        <button mat-icon-button (click)="abrirEditar(usuario)" matTooltip="Editar">
+          <mat-icon>edit</mat-icon>
+        </button>
+        <button mat-icon-button (click)="eliminar(usuario)" matTooltip="Eliminar">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="columnas"></tr>
+    <tr mat-row *matRowDef="let row; columns: columnas"></tr>
+  </table>
+
+  @if (usuarios().length === 0) {
+    <p class="list-empty">No hay usuarios registrados.</p>
+  }
+}

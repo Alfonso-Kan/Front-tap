@@ -1,0 +1,20 @@
+<h2 mat-dialog-title>Detalle de perfil</h2>
+<mat-dialog-content>
+  <p><strong>Código:</strong> {{ perfil.codigo }}</p>
+  <p><strong>Nombre:</strong> {{ perfil.nombre }}</p>
+  <p><strong>Fecha de creación:</strong> {{ perfil.fecha_creacion | date: 'dd/MM/yyyy HH:mm' }}</p>
+
+  <p><strong>Secciones relacionadas:</strong></p>
+  @if (perfil.secciones?.length) {
+    <ul>
+      @for (seccion of perfil.secciones; track seccion.id) {
+        <li>{{ seccion.nombre }}</li>
+      }
+    </ul>
+  } @else {
+    <p>Sin secciones asignadas.</p>
+  }
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-flat-button color="primary" (click)="dialogRef.close()">Cerrar</button>
+</mat-dialog-actions>

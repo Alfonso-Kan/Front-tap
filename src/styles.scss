@@ -1,1 +1,135 @@
+
+// Custom Theming for Angular Material
+// For more information: https://material.angular.dev/guide/theming
+@use '@angular/material' as mat;
+
+html {
+  @include mat.theme((
+    color: (
+      theme-type: light,
+      primary: mat.$azure-palette,
+      tertiary: mat.$blue-palette,
+    ),
+    typography: Roboto,
+    density: 0,
+  ));
+
+  // Brand override (#000000 / #F3D83E / #FFFFFF), applied on top of Material's
+  // M3 system tokens per https://material.angular.dev/guide/system-variables
+  & {
+    --mat-sys-primary: #000000;
+    --mat-sys-on-primary: #ffffff;
+    --mat-sys-primary-container: #f3d83e;
+    --mat-sys-on-primary-container: #000000;
+    --mat-sys-secondary: #f3d83e;
+    --mat-sys-on-secondary: #000000;
+    --mat-sys-secondary-container: #f3d83e;
+    --mat-sys-on-secondary-container: #000000;
+    --mat-sys-tertiary: #f3d83e;
+    --mat-sys-on-tertiary: #000000;
+    --mat-sys-surface: #ffffff;
+    --mat-sys-on-surface: #000000;
+    --mat-sys-background: #ffffff;
+    --mat-sys-on-background: #000000;
+  }
+}
+
 /* You can add global styles to this file, and also import other style files */
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.app-toolbar {
+  background: #000000;
+  color: #ffffff;
+}
+
+// Shared layout classes reused across the CRUD list screens (Productos, Usuarios, Perfiles, Secciones, Bitácora).
+.list-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 16px;
+
+  h1 {
+    margin: 0;
+    font-size: 1.5rem;
+  }
+}
+
+.list-actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.list-table {
+  width: 100%;
+}
+
+.list-loading {
+  display: flex;
+  justify-content: center;
+  padding: 48px 0;
+}
+
+.list-empty {
+  padding: 24px 0;
+  text-align: center;
+  color: rgba(0, 0, 0, 0.6);
+}
+
+.full-width {
+  width: 100%;
+}
+
+// Shared avatar picker/preview, used by the usuario form and detail dialogs.
+.avatar-picker {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.avatar-preview {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.avatar-placeholder {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: #eeeeee;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #999999;
+}
+
+.field-error {
+  color: #b00020;
+  font-size: 0.75rem;
+  margin: 4px 0 0;
+}
+
+.detail-strong {
+  font-weight: 600;
+  margin: 0;
+}
+
+.bitacora-filtros {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 8px;
+}
+
+.diff-cambio {
+  background: rgba(243, 216, 62, 0.3);
+  font-weight: 600;
+}

@@ -1,0 +1,30 @@
+<h2 mat-dialog-title>Detalle de usuario</h2>
+<mat-dialog-content>
+  <div class="avatar-picker">
+    @if (usuario.foto_perfil) {
+      <img [src]="usuario.foto_perfil" alt="Foto de perfil" class="avatar-preview" />
+    } @else {
+      <div class="avatar-placeholder"><mat-icon>person</mat-icon></div>
+    }
+    <div>
+      <p class="detail-strong">{{ usuario.nombre }}</p>
+      <p>{{ usuario.usuario }}</p>
+    </div>
+  </div>
+
+  <p><strong>Teléfono:</strong> {{ usuario.telefono || 'No registrado' }}</p>
+
+  <p><strong>Perfiles relacionados:</strong></p>
+  @if (usuario.perfiles?.length) {
+    <ul>
+      @for (perfil of usuario.perfiles; track perfil.id) {
+        <li>{{ perfil.nombre }}</li>
+      }
+    </ul>
+  } @else {
+    <p>Sin perfiles asignados.</p>
+  }
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-flat-button color="primary" (click)="dialogRef.close()">Cerrar</button>
+</mat-dialog-actions>

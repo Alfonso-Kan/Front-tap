@@ -1,0 +1,65 @@
+<div class="list-header">
+  <h1>Bitácora</h1>
+</div>
+
+<div class="bitacora-filtros">
+  <mat-form-field appearance="outline">
+    <mat-label>Colección</mat-label>
+    <mat-select [(ngModel)]="coleccion" (selectionChange)="cargar()">
+      @for (opcion of colecciones; track opcion.valor) {
+        <mat-option [value]="opcion.valor">{{ opcion.etiqueta }}</mat-option>
+      }
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Acción</mat-label>
+    <mat-select [(ngModel)]="accion" (selectionChange)="cargar()">
+      @for (opcion of acciones; track opcion.valor) {
+        <mat-option [value]="opcion.valor">{{ opcion.etiqueta }}</mat-option>
+      }
+    </mat-select>
+  </mat-form-field>
+</div>
+
+@if (cargando()) {
+  <div class="list-loading"><mat-spinner diameter="32"></mat-spinner></div>
+} @else {
+  <table mat-table [dataSource]="registros()" class="list-table">
+    <ng-container matColumnDef="fecha">
+      <th mat-header-cell *matHeaderCellDef>Fecha</th>
+      <td mat-cell *matCellDef="let registro">{{ registro.fecha | date: 'dd/MM/yyyy HH:mm' }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="coleccion">
+      <th mat-header-cell *matHeaderCellDef>Colección</th>
+      <td mat-cell *matCellDef="let registro">{{ registro.coleccion }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="accion">
+      <th mat-header-cell *matHeaderCellDef>Acción</th>
+      <td mat-cell *matCellDef="let registro">{{ registro.accion }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="usuario">
+      <th mat-header-cell *matHeaderCellDef>Usuario</th>
+      <td mat-cell *matCellDef="let registro">{{ registro.usuario?.nombre || 'Sistema' }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="acciones">
+      <th mat-header-cell *matHeaderCellDef>Detalle</th>
+      <td mat-cell *matCellDef="let registro">
+        <button mat-icon-button (click)="verDiff(registro)" matTooltip="Ver cambios">
+          <mat-icon>compare_arrows</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="columnas"></tr>
+    <tr mat-row *matRowDef="let row; columns: columnas"></tr>
+  </table>
+
+  @if (registros().length === 0) {
+    <p class="list-empty">No hay registros de bitácora.</p>
+  }
+}

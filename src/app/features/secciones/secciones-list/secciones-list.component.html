@@ -1,0 +1,49 @@
+<div class="list-header">
+  <h1>Secciones</h1>
+  <div class="list-actions">
+    <button mat-flat-button color="primary" (click)="abrirCrear()">
+      <mat-icon>add</mat-icon>
+      Nueva sección
+    </button>
+  </div>
+</div>
+
+@if (cargando()) {
+  <div class="list-loading"><mat-spinner diameter="32"></mat-spinner></div>
+} @else {
+  <table mat-table [dataSource]="secciones()" class="list-table">
+    <ng-container matColumnDef="codigo">
+      <th mat-header-cell *matHeaderCellDef>Código</th>
+      <td mat-cell *matCellDef="let seccion">{{ seccion.codigo }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="nombre">
+      <th mat-header-cell *matHeaderCellDef>Nombre</th>
+      <td mat-cell *matCellDef="let seccion">{{ seccion.nombre }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="fecha_creacion">
+      <th mat-header-cell *matHeaderCellDef>Fecha de creación</th>
+      <td mat-cell *matCellDef="let seccion">{{ seccion.fecha_creacion | date: 'dd/MM/yyyy HH:mm' }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="acciones">
+      <th mat-header-cell *matHeaderCellDef>Acciones</th>
+      <td mat-cell *matCellDef="let seccion">
+        <button mat-icon-button (click)="abrirEditar(seccion)" matTooltip="Editar">
+          <mat-icon>edit</mat-icon>
+        </button>
+        <button mat-icon-button (click)="eliminar(seccion)" matTooltip="Eliminar">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="columnas"></tr>
+    <tr mat-row *matRowDef="let row; columns: columnas"></tr>
+  </table>
+
+  @if (secciones().length === 0) {
+    <p class="list-empty">No hay secciones registradas.</p>
+  }
+}

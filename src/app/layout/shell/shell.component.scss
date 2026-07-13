@@ -1,0 +1,45 @@
+.shell-container {
+  height: 100vh;
+}
+
+.shell-sidenav {
+  width: 240px;
+  background: #000000;
+  color: #ffffff;
+
+  ::ng-deep .mdc-list-item__primary-text {
+    color: #ffffff;
+  }
+
+  ::ng-deep .mat-icon {
+    color: #ffffff;
+  }
+
+  ::ng-deep .active-link {
+    background: rgba(243, 216, 62, 0.2);
+
+    .mdc-list-item__primary-text,
+    .mat-icon {
+      color: #f3d83e;
+    }
+  }
+}
+
+.shell-brand {
+  padding: 16px;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #f3d83e;
+}
+
+.shell-spacer {
+  flex: 1 1 auto;
+}
+
+.shell-user {
+  margin-right: 8px;
+}
+
+.shell-content {
+  padding: 24px;
+}
