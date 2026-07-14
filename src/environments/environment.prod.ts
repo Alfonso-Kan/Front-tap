@@ -4,5 +4,5 @@
 //   ng build --configuration production
 export const environment = {
   production: true,
-  apiUrl: 'https://TU-BACKEND.up.railway.app/api',
+  apiUrl: 'https://back-tap-production.up.railway.app/api',
 };
