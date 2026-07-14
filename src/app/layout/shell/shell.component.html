@@ -2,7 +2,7 @@
   <mat-sidenav mode="side" opened class="shell-sidenav">
     <div class="shell-brand">TAP Demo</div>
     <mat-nav-list>
-      @for (item of menuItems(); track item.codigo) {
+      @for (item of menuItems; track item.codigo) {
         <a mat-list-item [routerLink]="item.route" routerLinkActive="active-link">
           <mat-icon matListItemIcon>{{ item.icon }}</mat-icon>
           <span matListItemTitle>{{ item.label }}</span>

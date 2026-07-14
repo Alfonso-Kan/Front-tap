@@ -1,4 +1,4 @@
-import { Component, computed, inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
@@ -47,7 +47,10 @@ export class ShellComponent {
   private readonly router = inject(Router);
 
   readonly currentUser = this.authService.currentUser;
-  readonly menuItems = computed(() => MENU_ITEMS.filter((item) => this.authService.hasSeccion(item.codigo)));
+  // El menu muestra siempre las 5 secciones, sin importar el perfil; la
+  // restriccion real de acceso la sigue aplicando seccionGuard en las rutas
+  // (redirige a /sin-acceso), no el filtrado del menu.
+  readonly menuItems = MENU_ITEMS;
 
   logout(): void {
     this.authService.logout();
