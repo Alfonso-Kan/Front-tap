@@ -67,10 +67,18 @@ export class UsuariosListComponent implements OnInit {
         }
 
         this.usuarioService.create(resultado).subscribe({
-          next: () => {
-            this.snackBar.open('Usuario creado. Se enviaron las credenciales por correo.', 'Cerrar', {
-              duration: 4000,
-            });
+          next: (creado) => {
+            if (creado.correo_enviado === false) {
+              this.snackBar.open(
+                'Usuario creado, pero no se pudo enviar el correo con las credenciales.',
+                'Cerrar',
+                { duration: 6000 },
+              );
+            } else {
+              this.snackBar.open('Usuario creado. Se enviaron las credenciales por correo.', 'Cerrar', {
+                duration: 4000,
+              });
+            }
             this.cargar();
           },
           error: () => this.snackBar.open('No se pudo crear el usuario.', 'Cerrar', { duration: 4000 }),

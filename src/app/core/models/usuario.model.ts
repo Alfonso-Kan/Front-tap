@@ -13,4 +13,5 @@ export interface Usuario {
   telefono?: string | null;
   foto_perfil?: string | null;
   perfiles?: PerfilResumen[];
+  correo_enviado?: boolean;
 }
