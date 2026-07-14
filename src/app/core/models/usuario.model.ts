@@ -14,4 +14,5 @@ export interface Usuario {
   foto_perfil?: string | null;
   perfiles?: PerfilResumen[];
   correo_enviado?: boolean;
+  protegido?: boolean;
 }

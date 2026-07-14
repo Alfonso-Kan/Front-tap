@@ -6,4 +6,5 @@ export interface Perfil {
   nombre: string;
   fecha_creacion: string;
   secciones?: Seccion[];
+  protegido?: boolean;
 }

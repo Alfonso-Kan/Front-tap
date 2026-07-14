@@ -54,12 +54,14 @@
         <button mat-icon-button (click)="verDetalle(usuario)" matTooltip="Ver detalle">
           <mat-icon>visibility</mat-icon>
         </button>
-        <button mat-icon-button (click)="abrirEditar(usuario)" matTooltip="Editar">
-          <mat-icon>edit</mat-icon>
-        </button>
-        <button mat-icon-button (click)="eliminar(usuario)" matTooltip="Eliminar">
-          <mat-icon>delete</mat-icon>
-        </button>
+        @if (!usuario.protegido) {
+          <button mat-icon-button (click)="abrirEditar(usuario)" matTooltip="Editar">
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button mat-icon-button (click)="eliminar(usuario)" matTooltip="Eliminar">
+            <mat-icon>delete</mat-icon>
+          </button>
+        }
       </td>
     </ng-container>
 
