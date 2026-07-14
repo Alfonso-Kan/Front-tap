@@ -9,7 +9,6 @@ import { MatTableModule } from '@angular/material/table';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { Seccion } from '../../../core/models/seccion.model';
 import { SeccionPayload, SeccionService } from '../../../core/services/seccion.service';
-import { ConfirmDialogComponent } from '../../../shared/confirm-dialog/confirm-dialog.component';
 import { SeccionFormDialogComponent } from '../seccion-form-dialog/seccion-form-dialog.component';
 
 @Component({
@@ -53,25 +52,6 @@ export class SeccionesListComponent implements OnInit {
     });
   }
 
-  abrirCrear(): void {
-    this.dialog
-      .open(SeccionFormDialogComponent, { width: '420px', data: {} })
-      .afterClosed()
-      .subscribe((payload: SeccionPayload | undefined) => {
-        if (!payload) {
-          return;
-        }
-
-        this.seccionService.create(payload).subscribe({
-          next: () => {
-            this.snackBar.open('Sección creada.', 'Cerrar', { duration: 3000 });
-            this.cargar();
-          },
-          error: () => this.snackBar.open('No se pudo crear la sección.', 'Cerrar', { duration: 4000 }),
-        });
-      });
-  }
-
   abrirEditar(seccion: Seccion): void {
     this.dialog
       .open(SeccionFormDialogComponent, { width: '420px', data: { seccion } })
@@ -87,28 +67,6 @@ export class SeccionesListComponent implements OnInit {
             this.cargar();
           },
           error: () => this.snackBar.open('No se pudo actualizar la sección.', 'Cerrar', { duration: 4000 }),
-        });
-      });
-  }
-
-  eliminar(seccion: Seccion): void {
-    this.dialog
-      .open(ConfirmDialogComponent, {
-        width: '360px',
-        data: { titulo: 'Eliminar sección', mensaje: `¿Seguro que deseas eliminar "${seccion.nombre}"?` },
-      })
-      .afterClosed()
-      .subscribe((confirmado: boolean | undefined) => {
-        if (!confirmado) {
-          return;
-        }
-
-        this.seccionService.remove(seccion.id).subscribe({
-          next: () => {
-            this.snackBar.open('Sección eliminada.', 'Cerrar', { duration: 3000 });
-            this.cargar();
-          },
-          error: () => this.snackBar.open('No se pudo eliminar la sección.', 'Cerrar', { duration: 4000 }),
         });
       });
   }

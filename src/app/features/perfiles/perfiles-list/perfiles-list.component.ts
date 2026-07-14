@@ -36,6 +36,8 @@ export class PerfilesListComponent implements OnInit {
   readonly columnas = ['codigo', 'nombre', 'fecha_creacion', 'acciones'];
   readonly perfiles = signal<Perfil[]>([]);
   readonly cargando = signal(false);
+  readonly exportandoPdf = signal(false);
+  readonly exportandoExcel = signal(false);
 
   ngOnInit(): void {
     this.cargar();
@@ -124,10 +126,30 @@ export class PerfilesListComponent implements OnInit {
   }
 
   exportarPdf(): void {
-    this.perfilService.exportPdf().subscribe((blob) => descargarBlob(blob, 'perfiles.pdf'));
+    this.exportandoPdf.set(true);
+    this.perfilService.exportPdf().subscribe({
+      next: (blob) => {
+        descargarBlob(blob, 'perfiles.pdf');
+        this.exportandoPdf.set(false);
+      },
+      error: () => {
+        this.exportandoPdf.set(false);
+        this.snackBar.open('No se pudo generar el PDF.', 'Cerrar', { duration: 4000 });
+      },
+    });
   }
 
   exportarExcel(): void {
-    this.perfilService.exportExcel().subscribe((blob) => descargarBlob(blob, 'perfiles.xlsx'));
+    this.exportandoExcel.set(true);
+    this.perfilService.exportExcel().subscribe({
+      next: (blob) => {
+        descargarBlob(blob, 'perfiles.xlsx');
+        this.exportandoExcel.set(false);
+      },
+      error: () => {
+        this.exportandoExcel.set(false);
+        this.snackBar.open('No se pudo generar el Excel.', 'Cerrar', { duration: 4000 });
+      },
+    });
   }
 }

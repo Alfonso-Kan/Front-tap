@@ -7,12 +7,26 @@
   background: #000000;
   color: #ffffff;
 
-  ::ng-deep .mdc-list-item__primary-text {
-    color: #ffffff;
-  }
+  // Material's own hover/focus state rebinds the list item's label/icon
+  // color tokens to the theme's on-surface color (dark, meant for light
+  // backgrounds). Since this sidenav is always black regardless of
+  // light/dark mode, those states need to be forced back to white here
+  // — plain specificity isn't enough because Material's state rule also
+  // targets the item itself, so this uses !important deliberately.
+  ::ng-deep .mat-mdc-list-item {
+    .mdc-list-item__primary-text,
+    .mat-icon {
+      color: #ffffff !important;
+    }
 
-  ::ng-deep .mat-icon {
-    color: #ffffff;
+    &:hover,
+    &:focus,
+    &.mdc-list-item--selected {
+      .mdc-list-item__primary-text,
+      .mat-icon {
+        color: #ffffff !important;
+      }
+    }
   }
 
   ::ng-deep .active-link {
@@ -20,7 +34,7 @@
 
     .mdc-list-item__primary-text,
     .mat-icon {
-      color: #f3d83e;
+      color: #f3d83e !important;
     }
   }
 }

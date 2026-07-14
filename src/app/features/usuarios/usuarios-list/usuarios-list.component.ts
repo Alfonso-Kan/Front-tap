@@ -36,6 +36,8 @@ export class UsuariosListComponent implements OnInit {
   readonly columnas = ['codigo', 'usuario', 'nombre', 'fecha_creacion', 'acciones'];
   readonly usuarios = signal<Usuario[]>([]);
   readonly cargando = signal(false);
+  readonly exportandoPdf = signal(false);
+  readonly exportandoExcel = signal(false);
 
   ngOnInit(): void {
     this.cargar();
@@ -126,10 +128,30 @@ export class UsuariosListComponent implements OnInit {
   }
 
   exportarPdf(): void {
-    this.usuarioService.exportPdf().subscribe((blob) => descargarBlob(blob, 'usuarios.pdf'));
+    this.exportandoPdf.set(true);
+    this.usuarioService.exportPdf().subscribe({
+      next: (blob) => {
+        descargarBlob(blob, 'usuarios.pdf');
+        this.exportandoPdf.set(false);
+      },
+      error: () => {
+        this.exportandoPdf.set(false);
+        this.snackBar.open('No se pudo generar el PDF.', 'Cerrar', { duration: 4000 });
+      },
+    });
   }
 
   exportarExcel(): void {
-    this.usuarioService.exportExcel().subscribe((blob) => descargarBlob(blob, 'usuarios.xlsx'));
+    this.exportandoExcel.set(true);
+    this.usuarioService.exportExcel().subscribe({
+      next: (blob) => {
+        descargarBlob(blob, 'usuarios.xlsx');
+        this.exportandoExcel.set(false);
+      },
+      error: () => {
+        this.exportandoExcel.set(false);
+        this.snackBar.open('No se pudo generar el Excel.', 'Cerrar', { duration: 4000 });
+      },
+    });
   }
 }

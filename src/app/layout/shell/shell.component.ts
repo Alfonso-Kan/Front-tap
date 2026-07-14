@@ -7,6 +7,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { AuthService } from '../../core/services/auth.service';
+import { ThemeToggleComponent } from '../../shared/theme-toggle/theme-toggle.component';
 
 interface MenuItem {
   codigo: string;
@@ -36,6 +37,7 @@ const MENU_ITEMS: MenuItem[] = [
     MatIconModule,
     MatButtonModule,
     MatTooltipModule,
+    ThemeToggleComponent,
   ],
   templateUrl: './shell.component.html',
   styleUrl: './shell.component.scss',

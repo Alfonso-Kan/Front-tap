@@ -15,7 +15,9 @@ html {
   ));
 
   // Brand override (#000000 / #F3D83E / #FFFFFF), applied on top of Material's
-  // M3 system tokens per https://material.angular.dev/guide/system-variables
+  // M3 system tokens per https://material.angular.dev/guide/system-variables.
+  // Light mode (default) below; .dark-theme (toggled by ThemeService on <html>)
+  // overrides the same tokens further down for dark mode.
   & {
     --mat-sys-primary: #000000;
     --mat-sys-on-primary: #ffffff;
@@ -29,16 +31,58 @@ html {
     --mat-sys-on-tertiary: #000000;
     --mat-sys-surface: #ffffff;
     --mat-sys-on-surface: #000000;
+    --mat-sys-surface-dim: #f2f2f2;
+    --mat-sys-surface-bright: #ffffff;
+    --mat-sys-surface-container-lowest: #ffffff;
+    --mat-sys-surface-container-low: #f8f8f8;
+    --mat-sys-surface-container: #f5f5f5;
+    --mat-sys-surface-container-high: #ececec;
+    --mat-sys-surface-container-highest: #e3e3e3;
     --mat-sys-background: #ffffff;
     --mat-sys-on-background: #000000;
+  }
+
+  &.dark-theme {
+    color-scheme: dark;
+
+    --mat-sys-primary: #f3d83e;
+    --mat-sys-on-primary: #000000;
+    --mat-sys-primary-container: #4a4008;
+    --mat-sys-on-primary-container: #f3d83e;
+    --mat-sys-secondary: #f3d83e;
+    --mat-sys-on-secondary: #000000;
+    --mat-sys-secondary-container: #3a3a3a;
+    --mat-sys-on-secondary-container: #f3d83e;
+    --mat-sys-tertiary: #f3d83e;
+    --mat-sys-on-tertiary: #000000;
+    --mat-sys-surface: #121212;
+    --mat-sys-on-surface: #ffffff;
+    --mat-sys-surface-dim: #121212;
+    --mat-sys-surface-bright: #2c2c2c;
+    --mat-sys-surface-container-lowest: #0a0a0a;
+    --mat-sys-surface-container-low: #1a1a1a;
+    --mat-sys-surface-container: #1e1e1e;
+    --mat-sys-surface-container-high: #2a2a2a;
+    --mat-sys-surface-container-highest: #353535;
+    --mat-sys-background: #121212;
+    --mat-sys-on-background: #ffffff;
   }
 }
 
 /* You can add global styles to this file, and also import other style files */
 
 html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  background: var(--mat-sys-background);
+  color: var(--mat-sys-on-background);
+}
+
+// Toolbar and sidenav stay permanently black/yellow (the brand's fixed
+// "chrome"); only the content area, cards, tables and dialogs switch
+// between light/dark via the --mat-sys-* tokens above.
 .app-toolbar {
   background: #000000;
   color: #ffffff;
@@ -78,7 +122,13 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 .list-empty {
   padding: 24px 0;
   text-align: center;
-  color: rgba(0, 0, 0, 0.6);
+  color: color-mix(in srgb, var(--mat-sys-on-surface) 60%, transparent);
+}
+
+.list-hint {
+  color: color-mix(in srgb, var(--mat-sys-on-surface) 65%, transparent);
+  margin: -8px 0 16px;
+  font-size: 0.875rem;
 }
 
 .full-width {
@@ -104,11 +154,11 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   width: 64px;
   height: 64px;
   border-radius: 50%;
-  background: #eeeeee;
+  background: var(--mat-sys-surface-container-high);
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #999999;
+  color: color-mix(in srgb, var(--mat-sys-on-surface) 60%, transparent);
 }
 
 .field-error {
@@ -132,4 +182,11 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 .diff-cambio {
   background: rgba(243, 216, 62, 0.3);
   font-weight: 600;
+}
+
+// Small inline spinner shown inside export buttons (PDF/Excel) while generating.
+.list-actions button mat-spinner {
+  display: inline-block;
+  margin-right: 8px;
+  vertical-align: middle;
 }

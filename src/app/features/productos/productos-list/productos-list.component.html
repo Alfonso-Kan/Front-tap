@@ -1,12 +1,20 @@
 <div class="list-header">
   <h1>Productos</h1>
   <div class="list-actions">
-    <button mat-stroked-button (click)="exportarPdf()">
-      <mat-icon>picture_as_pdf</mat-icon>
+    <button mat-stroked-button (click)="exportarPdf()" [disabled]="exportandoPdf()">
+      @if (exportandoPdf()) {
+        <mat-spinner diameter="18"></mat-spinner>
+      } @else {
+        <mat-icon>picture_as_pdf</mat-icon>
+      }
       PDF
     </button>
-    <button mat-stroked-button (click)="exportarExcel()">
-      <mat-icon>grid_on</mat-icon>
+    <button mat-stroked-button (click)="exportarExcel()" [disabled]="exportandoExcel()">
+      @if (exportandoExcel()) {
+        <mat-spinner diameter="18"></mat-spinner>
+      } @else {
+        <mat-icon>grid_on</mat-icon>
+      }
       Excel
     </button>
     <button mat-flat-button color="primary" (click)="abrirCrear()">

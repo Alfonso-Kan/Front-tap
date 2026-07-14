@@ -16,6 +16,7 @@
       <span>Sistema Tap Demo</span>
       <span class="shell-spacer"></span>
       <span class="shell-user">{{ currentUser()?.nombre }}</span>
+      <app-theme-toggle></app-theme-toggle>
       <button mat-icon-button (click)="logout()" aria-label="Cerrar sesión" matTooltip="Cerrar sesión">
         <mat-icon>logout</mat-icon>
       </button>

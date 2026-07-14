@@ -1,12 +1,9 @@
-<h2 mat-dialog-title>{{ esEdicion ? 'Editar sección' : 'Nueva sección' }}</h2>
+<h2 mat-dialog-title>Editar sección</h2>
 <form [formGroup]="form" (ngSubmit)="guardar()">
   <mat-dialog-content>
     <mat-form-field appearance="outline" class="full-width">
       <mat-label>Código</mat-label>
-      <input matInput formControlName="codigo" [readonly]="esEdicion" />
-      @if (form.controls.codigo.invalid && form.controls.codigo.touched) {
-        <mat-error>El código es requerido.</mat-error>
-      }
+      <input matInput [value]="data.seccion.codigo" disabled />
     </mat-form-field>
 
     <mat-form-field appearance="outline" class="full-width">

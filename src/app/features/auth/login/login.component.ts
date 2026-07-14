@@ -8,6 +8,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../../core/services/auth.service';
+import { ThemeToggleComponent } from '../../../shared/theme-toggle/theme-toggle.component';
 
 @Component({
   selector: 'app-login',
@@ -21,6 +22,7 @@ import { AuthService } from '../../../core/services/auth.service';
     MatIconModule,
     MatInputModule,
     MatProgressSpinnerModule,
+    ThemeToggleComponent,
   ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',

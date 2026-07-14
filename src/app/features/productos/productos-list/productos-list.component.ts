@@ -36,6 +36,8 @@ export class ProductosListComponent implements OnInit {
   readonly columnas = ['codigo', 'nombre', 'precio', 'fecha_creacion', 'acciones'];
   readonly productos = signal<Producto[]>([]);
   readonly cargando = signal(false);
+  readonly exportandoPdf = signal(false);
+  readonly exportandoExcel = signal(false);
 
   ngOnInit(): void {
     this.cargar();
@@ -116,10 +118,30 @@ export class ProductosListComponent implements OnInit {
   }
 
   exportarPdf(): void {
-    this.productoService.exportPdf().subscribe((blob) => descargarBlob(blob, 'productos.pdf'));
+    this.exportandoPdf.set(true);
+    this.productoService.exportPdf().subscribe({
+      next: (blob) => {
+        descargarBlob(blob, 'productos.pdf');
+        this.exportandoPdf.set(false);
+      },
+      error: () => {
+        this.exportandoPdf.set(false);
+        this.snackBar.open('No se pudo generar el PDF.', 'Cerrar', { duration: 4000 });
+      },
+    });
   }
 
   exportarExcel(): void {
-    this.productoService.exportExcel().subscribe((blob) => descargarBlob(blob, 'productos.xlsx'));
+    this.exportandoExcel.set(true);
+    this.productoService.exportExcel().subscribe({
+      next: (blob) => {
+        descargarBlob(blob, 'productos.xlsx');
+        this.exportandoExcel.set(false);
+      },
+      error: () => {
+        this.exportandoExcel.set(false);
+        this.snackBar.open('No se pudo generar el Excel.', 'Cerrar', { duration: 4000 });
+      },
+    });
   }
 }

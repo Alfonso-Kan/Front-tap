@@ -5,10 +5,14 @@ import { environment } from '../../../environments/environment';
 import { Seccion } from '../models/seccion.model';
 
 export interface SeccionPayload {
-  codigo: string;
   nombre: string;
 }
 
+/**
+ * Las secciones son las 5 pantallas fijas del sistema (ligadas a rutas y
+ * middleware de acceso reales), por eso no hay create/remove: solo listar,
+ * ver detalle y renombrar.
+ */
 @Injectable({ providedIn: 'root' })
 export class SeccionService {
   private readonly http = inject(HttpClient);
@@ -22,15 +26,7 @@ export class SeccionService {
     return this.http.get<Seccion>(`${this.baseUrl}/${id}`);
   }
 
-  create(payload: SeccionPayload): Observable<Seccion> {
-    return this.http.post<Seccion>(this.baseUrl, payload);
-  }
-
   update(id: string, payload: SeccionPayload): Observable<Seccion> {
     return this.http.put<Seccion>(`${this.baseUrl}/${id}`, payload);
-  }
-
-  remove(id: string): Observable<void> {
-    return this.http.delete<void>(`${this.baseUrl}/${id}`);
   }
 }
