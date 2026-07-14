@@ -34,6 +34,21 @@ export class AuthService {
     );
   }
 
+  register(datos: {
+    nombre: string;
+    usuario: string;
+    password: string;
+    password_confirmation: string;
+    telefono?: string | null;
+  }): Observable<LoginResponse> {
+    return this.http.post<LoginResponse>(`${this.baseUrl}/register`, datos).pipe(
+      tap((response) => {
+        localStorage.setItem(TOKEN_KEY, response.token);
+        this.currentUser.set(response.user);
+      }),
+    );
+  }
+
   me(): Observable<AuthUser> {
     return this.http.get<AuthUser>(`${this.baseUrl}/me`).pipe(tap((user) => this.currentUser.set(user)));
   }
